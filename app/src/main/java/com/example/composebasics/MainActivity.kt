@@ -38,11 +38,12 @@ fun Greeting(name: String) {
 
 @Composable
 private fun MyApp(modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Greeting(name = "Goblin")
+
+    // Added Columns on function calling with a composable
+    val troopNames = listOf<String>("Yeti","Wizard")
+    Column(modifier) {
+        for (name in troopNames)
+            Greeting(name = name)
     }
 }
 
