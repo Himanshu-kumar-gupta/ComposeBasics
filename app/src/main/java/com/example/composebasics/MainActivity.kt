@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// https://developer.android.com/codelabs/jetpack-compose-basics#7
 @Composable
 fun OnboardScreen(modifier: Modifier = Modifier) {
     // TODO: This state should be hoisted
