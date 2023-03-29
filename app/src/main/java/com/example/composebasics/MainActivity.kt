@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
+    // Setting a variable to change state
+    // Remember is used to remember the previous state
+    // and do not assign state as soon as recomposition happens
+    // and change it only if changed by user or by external factors
+
+    // each call of comosable has its own state
+
+    val expanded = remember {
+        mutableStateOf(false)
+    }
+
     Surface(color = MaterialTheme.colorScheme.primary,
         // Padding for each column from outer composable
         modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)) {
@@ -41,9 +54,9 @@ fun Greeting(name: String) {
             }
 
             // Using elevated button at end of row
-            ElevatedButton(onClick = { /*TODO*/ }) {
+            ElevatedButton(onClick = { expanded.value = !expanded.value }) {
                 // Add any other composable inside button using trailing lambdas
-                Text("Show more")
+                Text(if(expanded.value) "Show less" else "Show more")
             }
         }
 
@@ -54,7 +67,7 @@ fun Greeting(name: String) {
 private fun MyApp(modifier: Modifier = Modifier) {
 
     // Added Columns on function calling with a composable
-    val troopNames = listOf<String>("Yeti","Wizard")
+    val troopNames = listOf("Yeti","Wizard")
 
     // Padding for whole Column hence whole layout at this time
     Column(modifier.padding(horizontal = 4.dp, vertical = 4.dp)) {
