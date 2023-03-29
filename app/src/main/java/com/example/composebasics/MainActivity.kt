@@ -40,11 +40,16 @@ fun Greeting(name: String) {
         mutableStateOf(false)
     }
 
+    val extraPadding = if(expanded.value) 48.dp else 0.dp
+
     Surface(color = MaterialTheme.colorScheme.primary,
         // Padding for each column from outer composable
         modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)) {
+
         // Padding for inside of each Row element(for text and button)
-        Row(modifier = Modifier.padding(24.dp)) {
+        Row(modifier = Modifier
+            .padding(24.dp)
+            .padding(bottom = extraPadding)) {
 
             // Weight modifier makes it flexible and allows to take all available space
             // Hence, fillMaxWidth is not needed
