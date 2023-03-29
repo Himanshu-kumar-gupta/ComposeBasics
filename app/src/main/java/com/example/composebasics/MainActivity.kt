@@ -3,10 +3,8 @@ package com.example.composebasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,11 +30,23 @@ fun Greeting(name: String) {
     Surface(color = MaterialTheme.colorScheme.primary,
         // Padding for each column from outer composable
         modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)) {
-        // Padding for inside of each Column element(for text)
-        Column(modifier = Modifier.fillMaxWidth().padding(24.dp)) {
-            Text(text = "Hello,")
-            Text(text = "$name!")
+        // Padding for inside of each Row element(for text and button)
+        Row(modifier = Modifier.padding(24.dp)) {
+
+            // Weight modifier makes it flexible and allows to take all available space
+            // Hence, fillMaxWidth is not needed
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = "Hello,")
+                Text(text = "$name!")
+            }
+
+            // Using elevated button at end of row
+            ElevatedButton(onClick = { /*TODO*/ }) {
+                // Add any other composable inside button using trailing lambdas
+                Text("Show more")
+            }
         }
+
     }
 }
 
