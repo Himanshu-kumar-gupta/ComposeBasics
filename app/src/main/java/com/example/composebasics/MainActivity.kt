@@ -1,5 +1,6 @@
 package com.example.composebasics
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -97,6 +98,28 @@ fun Greeting(name: String) {
 
 @Composable
 private fun MyApp(modifier: Modifier = Modifier) {
+    var shouldShowOnboard by remember {
+        mutableStateOf(true)
+    }
+    Surface(modifier) {
+        if (shouldShowOnboard) {
+            OnboardScreen(/* TODO */)
+        } else {
+            greetingS()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MyAppPreview() {
+    ComposeBasicsTheme {
+        MyApp(Modifier.fillMaxSize())
+    }
+}
+
+@Composable
+private fun greetingS(modifier: Modifier = Modifier) {
 
     // Added Columns on function calling with a composable
     val troopNames = listOf("Yeti","Wizard")
@@ -108,6 +131,12 @@ private fun MyApp(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun greetingSPreview() {
+    ComposeBasicsTheme {
+        greetingS()
+    }
+}
 // widthDp shows preview with a fixed width
 @Preview(showBackground = true, name = "Text preview", widthDp = 320)
 @Composable
