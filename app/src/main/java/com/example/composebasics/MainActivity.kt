@@ -1,6 +1,5 @@
 package com.example.composebasics
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,13 +23,25 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// https://developer.android.com/codelabs/jetpack-compose-basics#7
 @Composable
-fun OnboardScreen(modifier: Modifier = Modifier) {
-    // TODO: This state should be hoisted
+private fun MyApp(modifier: Modifier = Modifier) {
     var shouldShowOnboard by remember {
         mutableStateOf(true)
     }
+    Surface(modifier) {
+        if (shouldShowOnboard) {
+            OnboardScreen(onContinueClicked = {shouldShowOnboard = false})
+        } else {
+            GreetingS()
+        }
+    }
+}
+
+// https://developer.android.com/codelabs/jetpack-compose-basics#7
+@Composable
+fun OnboardScreen(
+    onContinueClicked:()->Unit,
+    modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -40,7 +51,9 @@ fun OnboardScreen(modifier: Modifier = Modifier) {
         Text("Welcome to Jetpack Compose!")
         Button(
             modifier = Modifier.padding(vertical = 24.dp),
-            onClick = { shouldShowOnboard = false }
+            // On click of button the onContinueClicked function
+            // will be called which will change the mutable state value
+            onClick = onContinueClicked
         ) {
             Text("Continue")
         }
@@ -51,7 +64,9 @@ fun OnboardScreen(modifier: Modifier = Modifier) {
 @Composable
 fun OnboardPreview() {
     ComposeBasicsTheme {
-        OnboardScreen()
+        // Callback fun does nothing on click of button
+        // and it does not require also as it is preview
+        OnboardScreen(onContinueClicked = {})
     }
 }
 
@@ -62,7 +77,7 @@ fun Greeting(name: String) {
     // and do not assign state as soon as recomposition happens
     // and change it only if changed by user or by external factors
 
-    // each call of comosable has its own state
+    // each call of composable has its own state
 
     val expanded = remember {
         mutableStateOf(false)
@@ -96,20 +111,6 @@ fun Greeting(name: String) {
     }
 }
 
-@Composable
-private fun MyApp(modifier: Modifier = Modifier) {
-    var shouldShowOnboard by remember {
-        mutableStateOf(true)
-    }
-    Surface(modifier) {
-        if (shouldShowOnboard) {
-            OnboardScreen(/* TODO */)
-        } else {
-            greetingS()
-        }
-    }
-}
-
 @Preview
 @Composable
 fun MyAppPreview() {
@@ -119,7 +120,7 @@ fun MyAppPreview() {
 }
 
 @Composable
-private fun greetingS(modifier: Modifier = Modifier) {
+private fun GreetingS(modifier: Modifier = Modifier) {
 
     // Added Columns on function calling with a composable
     val troopNames = listOf("Yeti","Wizard")
@@ -131,12 +132,14 @@ private fun greetingS(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview
 @Composable
-fun greetingSPreview() {
+fun GreetingSPreview() {
     ComposeBasicsTheme {
-        greetingS()
+        GreetingS()
     }
 }
+
 // widthDp shows preview with a fixed width
 @Preview(showBackground = true, name = "Text preview", widthDp = 320)
 @Composable
