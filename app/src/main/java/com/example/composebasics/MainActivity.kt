@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,7 +82,9 @@ fun Greeting(name: String) {
 
     // each call of composable has its own state
 
-    val expanded = remember {
+    // Remember Savable has persistent state even when we rotate the screen,change to dark mode or kill the process
+    // https://developer.android.com/codelabs/jetpack-compose-basics#9
+    val expanded = rememberSaveable {
         mutableStateOf(false)
     }
 
